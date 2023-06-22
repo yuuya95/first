@@ -1,53 +1,77 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import {Promise} from 'core-js';
-import NewView from '../views/NewView.vue'
-import TodoView from "../views/TodoView.vue"
+import NewTCView from '../views/NewTCView.vue'
+import MeetingView from "../views/MeetingView.vue"
 import HomeView from '../views/HomeView.vue'
 import QRView from "../views/QRView.vue"
-import RegisterView from "../views/Register.vue"
+import ChooseView from "../views/ChooseView.vue"
+import RegisterView from "../views/RegisterView.vue"
+import RegisterSecondSTView from "../views/RegisterSecondSTView.vue"
+import RegisterSecondTCView from "../views/RegisterSecondTCView.vue"
 import SigninView from "../views/Signin.vue"
-import { reject, resolve } from 'core-js/fn/promise'
+// import { reject, resolve } from 'core-js/fn/promise'
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView
-  },
-  {
-    path: "/new",
-    name: "new",
-    component: NewView,
+    component: HomeView,
     meta: {
       requiresAuth: true,
     }
   },
   {
-    path: "/todo/:id",
-    name: "oneTodo",
-    component: TodoView
+    path: "/new",
+    name: "newTC",
+    component: NewTCView,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
-    path: "/qr",
+    path: "/choose/:id",
+    name: "choose",
+    component: ChooseView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: "/meeting/:id",
+    name: "oneMeeting",
+    component: MeetingView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: "/qr/:id/:type",
     name: "QRreader",
-    component: QRView
+    component: QRView,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: "/register",
     name: "register",
     component: RegisterView,
-    meta: {
-      requiresAuth: false,
-    }
+  },
+  {
+    path: "/registersecondST/:email",
+    name: "registerSecondST",
+    component: RegisterSecondSTView,
+  },
+  {
+    path: "/registersecondTC/:email/:password",
+    name: "registerSecondTC",
+    component: RegisterSecondTCView,
   },
   {
     path: "/signin",
     name: "signin",
     component: SigninView,
-    meta: {
-      requiresAuth: false,
-    }
   },
 ]
 
@@ -75,7 +99,7 @@ router.beforeEach(async(to, from, next) => {
       next();
     }else{
       console.log("you dont have token");
-      next("/");
+      next("/register");
     }
   }else{
     next();

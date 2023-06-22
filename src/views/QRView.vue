@@ -9,7 +9,22 @@
   </template>
   
   <script>
-  import { QrcodeStream } from "vue3-qrcode-reader";
+  import {
+    collection,
+    doc,
+    updateDoc,
+    getDocs,
+    onSnapshot,
+    addDoc,
+    query,
+    orderBy,
+    deleteDoc,
+    setDoc,
+    where,
+    serverTimestamp,
+  } from "firebase/firestore";
+import { db } from "../firebase";
+import { QrcodeStream } from "vue3-qrcode-reader";
   
   export default {
     name: "QRView",
@@ -18,13 +33,53 @@
     data () {
       return {
         result: '',
-        error: ''
+        error: '',
+        userID: "",
+        type: "",
+        docRef: null,
       }
     },
   
     methods: {
-      onDecode (result) {
-        this.result = result
+      created() {
+        this.type = this.$route.params.type;
+      },
+      onDecode: async function (result) {
+        // this.result = result
+        // result.
+        const user_desc = result.split(",");
+        const q1 = query(collection(db, "user"), where("classes", "==", user_desc[1]), where("grade", "==", user_desc[0]), where("num", "==", user_desc[2]));
+        const querySnapshot1 = await getDocs(q1);
+        
+        querySnapshot1.forEach((doc) => {
+          this.userID = doc.id;
+          console.log(doc.id)
+        });
+
+        const q = query(collection(db, "meeting_user"), where("userID", "==", this.userID), where("meetingID", "==", String(this.$route.params.id)));
+
+        const querySnapshot = await getDocs(q);
+        console.log("b", querySnapshot)
+
+        querySnapshot.forEach((doc) => {
+          console.log("asdasd")
+          this.docRef = doc(db, "meeting_user", doc.id);
+          this.userID = doc.id;
+          console.log("a" + doc.id)
+          console.log("asdasd")
+        });
+
+        if(this.type == "first"){
+          await updateDoc(this.docRef, {
+            "firstTime": serverTimestamp(),
+          })
+          console.log("c")
+        }
+        else if(this.type == "last"){
+          await updateDoc(this.docRef, {
+            "lastTime": serverTimestamp(),
+          })
+        }
       },
   
       async onInit (promise) {
