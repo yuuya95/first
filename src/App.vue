@@ -1,13 +1,12 @@
 <template>
   <nav>
-    <router-link to="/new">New</router-link> / 
-    <router-link to="/">Home</router-link> / 
-    <router-link to="/qr">QR</router-link> / 
-    <router-link to="/register">Register</router-link> / 
-    <router-link to="/signin">Signin</router-link>
-    <button @click="handleSignOut" v-if="isLoggedIn">SingOut</button>
-    <p>{{ isLoggedIn }}</p>
-    <p>{{ currentUser.uid }}</p>
+    <router-link class="menutab" to="/new">New</router-link>
+    <router-link class="menutab" to="/">Home</router-link>
+    <router-link class="menutab" v-if="!(isLoggedIn)" to="/register">Register</router-link>
+    <router-link class="menutab" v-if="!(isLoggedIn)" to="/signin">Signin</router-link>
+    <button @click="handleSignOut" v-if="isLoggedIn" style="margin;:5px">SingOut</button>
+    <!-- <p>{{ isLoggedIn }}</p>
+    <p>{{ currentUser.uid }}</p> -->
   </nav>
   <router-view/>
 </template>

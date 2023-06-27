@@ -2,6 +2,7 @@
   <div class="editor">
     <p><input type="text" placeholder="title" v-model="title"></p>
     詳細<p><textarea v-model="describe" cols="30" rows="10"></textarea></p>
+    <p><input type="datetime-local" v-model="time"/></p>
     <input type="number" placeholder="学年" v-model="grade">
     <input type="number" placeholder="組" v-model="classes">
     <p><button @click="getUser(this.grade, this.classes)">検索</button></p>
@@ -12,12 +13,12 @@
     <div>
       <p v-for="sl_user in sl_users" :key="sl_user">{{sl_user}}</p>
     </div>
-    <p><button @click="createMeeting({title: this.title, describe: this.describe})">ミーティングを作成</button></p>
+    <p><button @click="createMeeting({title: this.title, describe: this.describe, time: Timestamp.fromDate(new Date(this.time))})">ミーティングを作成</button></p>
   </div>
 </template>
 
 <script>
-import {collection, ref, doc, updateDoc, where, getDocs, onSnapshot, addDoc, query, orderBy, deleteDoc, setDoc} from "firebase/firestore";
+import {collection, ref, doc, updateDoc, where, getDocs, onSnapshot, addDoc, query, orderBy, deleteDoc, setDoc, Timestamp} from "firebase/firestore";
 import { db } from "../firebase";
 export default {
   name: 'NewTCView',
@@ -30,6 +31,8 @@ export default {
         const data2 = {
           userID: sl_user.id,
           meetingID: docRef.id,
+          firstTime: null,
+          lastTime: null,
         }
         await addDoc(collection(db, "meeting_user"), data2)
       }))
@@ -73,6 +76,8 @@ export default {
       users: [],
       grade: null,
       classes: null,
+      describe: "",
+      time: null,
     }
   }
 }

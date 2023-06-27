@@ -1,9 +1,9 @@
 <template>
     <h1>create account</h1>
     <p><input type="text" placeholder="名前" v-model="name" /></p>
-    <p><input type="text" placeholder="年" v-model="grade" /></p>
-    <p><input type="text" placeholder="組" v-model="classes" /></p>
-    <p><input type="text" placeholder="番号" v-model="num" /></p>
+    <p><input type="number" placeholder="年" v-model="grade" /></p>
+    <p><input type="number" placeholder="組" v-model="classes" /></p>
+    <p><input type="number" placeholder="番号" v-model="num" /></p>
     <p><button @click="register">Submit</button></p>
 </template>
 

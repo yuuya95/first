@@ -4,7 +4,9 @@ import {Promise} from 'core-js';
 import NewTCView from '../views/NewTCView.vue'
 import MeetingView from "../views/MeetingView.vue"
 import HomeView from '../views/HomeView.vue'
-import QRView from "../views/QRView.vue"
+import QRFirstView from "../views/QRFirstView.vue"
+import QRLastView from "../views/QRLastView.vue"
+import AttendanceView from "../views/Attendance.vue"
 import ChooseView from "../views/ChooseView.vue"
 import RegisterView from "../views/RegisterView.vue"
 import RegisterSecondSTView from "../views/RegisterSecondSTView.vue"
@@ -46,9 +48,25 @@ const routes = [
     }
   },
   {
-    path: "/qr/:id/:type",
-    name: "QRreader",
-    component: QRView,
+    path: "/qrFirst/:id",
+    name: "QRreaderFirst",
+    component: QRFirstView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: "/qrLast/:id",
+    name: "QRreaderLast",
+    component: QRLastView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: "/attendance/:id",
+    name: "attendance",
+    component: AttendanceView,
     meta: {
       requiresAuth: true,
     }

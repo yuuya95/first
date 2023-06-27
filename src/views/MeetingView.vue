@@ -3,8 +3,9 @@
     <h1>{{ meeting.title }}</h1>
     <p>{{ meeting.describe }}</p>
     <!-- <router-link :to="{ name: 'oneMeetingPerson', params: { id: meeting.id }}">登録者を確認</router-link> -->
-    <router-link :to="{ name: 'QRreader', params: { id: meeting.id, type: 'first' }}">入室確認</router-link>
-    <router-link :to="{ name: 'QRreader', params: { id: meeting.id, type: 'last' }}">退室確認</router-link>
+    <p><router-link :to="{ name: 'QRreaderFirst', params: { id: meeting.id }}">入室確認</router-link></p>
+    <p><router-link :to="{ name: 'QRreaderLast', params: { id: meeting.id }}">退室確認</router-link></p>
+    <p><router-link :to="{ name: 'attendance', params: { id: meeting.id }}">出席確認</router-link></p>
   </div>
 </template>
 

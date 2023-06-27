@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <h1>This is an about page</h1>
+        <h1>作成したミーティング</h1>
         <div v-for="(meeting, key) in meetings" :key="key" style="padding: 30px;">
             <router-link :to="{ name: 'oneMeeting', params: { id: meeting.id }}">{{ meeting.title }}</router-link>
             <p>{{ meeting.describe }}</p>
